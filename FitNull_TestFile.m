@@ -16,14 +16,14 @@ sig_Dphi = .41;
 dI = -.06;
 sig_dI = .12;
 Nb = 0;
-sig_Nb = .05;
+sig_Nb = .005;
 
 var = [Na,Dphi,sig_Dphi,dI,sig_dI,Nb,sig_Nb];
 
 tot_PDF = null_PDF(var,x);
 
 %%% add some noise (normally distributed
-sigma = .05;
+sigma = .01;
 fake_noisy =tot_PDF+randn(1,numel(tot_PDF)).*sigma;   
 
 %%% x0 the initial conditions for the fitting
