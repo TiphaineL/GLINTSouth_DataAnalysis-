@@ -47,6 +47,9 @@ Nb_PDF = Nb_PDF/max(Nb_PDF);
 tot_PDF = conv(dI_Dphi_PDF,Nb_PDF,'same');
 tot_PDF = tot_PDF/max(tot_PDF);
 
+%xq = x(1):(abs(x(2)-x(1))/100):x(end);
+tot_PDF = interp1(x,tot_PDF,x);
+
 %%% Shift the data by mean Na
 % First find x=0
 a = find (x<0);
