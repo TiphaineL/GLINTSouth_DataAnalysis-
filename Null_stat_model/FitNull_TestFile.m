@@ -33,25 +33,21 @@ x0 = [0.001,0.1,0.1,0.005];
 lb = [0,-Inf,0,0];
 ub = [+Inf,+Inf,+Inf,+Inf]; 
 
-% lb = [];
-% ub = [];
-
 %%% Other fitting options
 options = optimoptions('lsqcurvefit','FinDiffRelStep',...
          [0.0001,0.0001,0.0001,0.0001],...
          'TolX',1e-6,'TolFun',1e-6,...
          'Display','iter-detailed');
 
-fitfunction = @(p,x) null_PDF([p(1:3),var(4:6),p(4)],x);
+w = 1./sqrt(abs(fake_noisy));
 
-[x_pp,resnorm,residual,exitflag,gof,output] = lsqcurvefit(...
-   fitfunction,x0,x,fake_noisy,lb,ub,options);
+costFunction = @(p,x) w.*(null_PDF([p(1:3),var(4:6),p(4)],x)-fake_noisy);
 
-% Display the exitflag and the goodness of fit parameters
-exitflag
-%gof
 
-x_pp = [x_pp(1:3),var(4:6),x_pp(4)];
+fitParam = lsqnonlin(@(p) w.*(null_PDF([p(1:3),var(4:6),p(4)],x)...
+    -fake_noisy),x0,lb,ub,options);
+
+x_pp = [fitParam(1:3),var(4:6),fitParam(4)];
 sol = null_PDF(x_pp,x);
 
 % Display the fitted parameters

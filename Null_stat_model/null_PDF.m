@@ -30,16 +30,16 @@ dI_PDF = dI_PDF / max(dI_PDF);
 dI_Dphi_PDF = conv(Dphi_PDF,dI_PDF,'same');
 dI_Dphi_PDF = dI_Dphi_PDF / max(dI_Dphi_PDF);
 
-Nb_PDF = normPDF(x,0,stdDev_Nb);
+Nb_PDF = normPDF([0,stdDev_Nb],x);
 Nb_PDF = Nb_PDF/max(Nb_PDF);
 
 tot_PDF = conv(dI_Dphi_PDF,Nb_PDF,'same');
-tot_PDF = tot_PDF/max(tot_PDF);
+%tot_PDF = dI_Dphi_PDF;
 
 x_shift_Na = x + mean_Na;
 tot_PDF = interp1(x_shift_Na,tot_PDF,x);
 tot_PDF(find(isnan(tot_PDF))) = 0;
-
+tot_PDF = tot_PDF/(sum(tot_PDF)*abs(x(2)-x(1)));
 
 % figure(1)
 % hold on

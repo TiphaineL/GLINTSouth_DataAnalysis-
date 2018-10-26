@@ -5,8 +5,8 @@ function  y  = normQuad( x, mean, stdDev )
 
 c = find(x<=0);
 
-y = exp(-(2*sqrt(x)-mean).^2/(2*stdDev^2)) ./ ...
-    (sqrt(2*pi*x)*stdDev);
+y = 2*exp(-(x-mean).^2/(2*stdDev^2)) ./ ...
+    (sqrt(2*pi)*x*stdDev);
 
 y(c) = 0;
 
